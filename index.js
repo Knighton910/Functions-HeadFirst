@@ -1,17 +1,26 @@
 let passengerList = [
-    { name: "Jane Doloop", paid: false, ticket: "coach" },
-    { name: "Dr Evel", paid: true, ticket: "firstclass" },
-    { name: "Sue Property", paid: true, ticket: "firstclass" },
-    { name: "John Funcall", paid: false, ticket: "coach" }
+    { name: "Jane Doloop", paid: false, ticket: "coach", premium: true },
+    { name: "Dr Evel", paid: true, ticket: "firstclass", premium: false },
+    { name: "Sue Property", paid: true, ticket: "firstclass", premium: true },
+    { name: "John Funcall", paid: false, ticket: "coach", premium: false }
 ];
+
 
 function createDrinkOrder (passenger) {
     var orderFunc;
 
-    if (passenger.ticket === "firstclass") {
+    if (passenger.premium === true && passenger.ticket === "firstclass") {
+        orderFunc = function () {
+            alert("Here's your complementary wine, would you like a cocktail with it?")
+        };
+    } else if (passenger.premium) {
         orderFunc = function () {
             alert("Would you like a cocktail or wine?");
         };
+    } else if (passenger.premium === true && passenger.ticket !== "firstclass") {
+        orderFunc = function () {
+            alert("Here's your complementary wine, would you like a cola or water with it?")
+        }
     } else {
         orderFunc = function () {
             alert("Your choice is cola or water");
@@ -20,20 +29,26 @@ function createDrinkOrder (passenger) {
     return orderFunc;
 }
 
+
 function createDinnerOrder (passenger) {
     var dinnerFunc;
 
     if (passenger.ticket === "firstclass") {
         dinnerFunc = function () {
-            alert("Would you like the Lobster & Beef soup or Shrimp Salad?");
+            alert("Would you like Chicken or Pasta?");
         };
+    } else if (passenger.premium === true) {
+        dinnerFunc = function () {
+            alert("would you like the Snackbox or cheese plate?");
+        }
     } else {
         dinnerFunc = function () {
-            alert("Would you like a lunchable or half a cold cut sandwhich?");
+            alert("peanuts or pretzels? choose!");
         }
     }
     return dinnerFunc;
 }
+
 
 function enjoyMovie (passenger) {
     var movieFunc;
@@ -50,7 +65,9 @@ function enjoyMovie (passenger) {
     return movieFunc;
 }
 
+
 console.log("roll call");
+
 
 function serveCustomer (passenger) {
     var getDrinkOrderFunction = createDrinkOrder(passenger);
@@ -59,14 +76,15 @@ function serveCustomer (passenger) {
     getDrinkOrderFunction();
     getDinnerFunc();
     getMovieFunc();
-
 }
+
 
 function servePassengers (passengers) {
     for (var i=0; i < passengers.length; i++) {
         serveCustomer(passengerList[i]);
     }
 }
+
 
 console.log("roll call 2");
 
